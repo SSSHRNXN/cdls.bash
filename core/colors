@@ -1,0 +1,24 @@
+#!/bin/bash
+
+blk=$'\033[30m'    # black
+red=$'\033[31m'    # red 
+grn=$'\033[32m'    # green
+ylw=$'\033[33m'    # yellow
+blu=$'\033[34m'    # blue
+pnk=$'\033[35m'    # pink
+cya=$'\033[36m'    # cyan
+wht=$'\033[37m'    # white 
+n=$'\033[0m'       # NO COLOR
+
+blk_bg=$'\033[40m'   # black background
+red_bg=$'\033[41m'   # red background
+grn_bg=$'\033[42m'   # green background
+ylw_bg=$'\033[43m'   # yellow background
+blu_bg=$'\033[44m'   # blue background
+pnk_bg=$'\033[45m'   # pink (magenta) background
+cya_bg=$'\033[46m'   # cyan background
+wht_bg=$'\033[47m'   # white background
+
+wht_red=$'\033[37;41m'  # white text red background 
+wht_grn=$'\033[37;42m'  # white text green background
+wht_blu=$'\033[37;44m'  # white text  background 
