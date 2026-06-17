@@ -1,0 +1,16 @@
+#!/bin/bash
+
+initialization_mode(){
+  for file in "$SCRIPT_DIR/$1/"*; do
+    source "$file"
+  done
+}
+
+modules_for_init=(
+	"core"
+	"UI"
+	)
+
+for module in "${modules_for_init[@]}"; do 
+	initialization_mode "$module"
+done

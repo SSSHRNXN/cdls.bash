@@ -1,0 +1,4 @@
+#!/bin/bash
+
+TTY_COLUMNS="$(tput cols)"
+TTY_LINES="$(tput lines)"

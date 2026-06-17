@@ -1,0 +1,3 @@
+#!/bin/bash
+
+lines_top="$(printf -- "${HORIZONTAL_L}%.0s" $(seq 1 "$((TTY_COLUMNS - 2))"))"
