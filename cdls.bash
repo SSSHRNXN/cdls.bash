@@ -5,3 +5,4 @@ source "$SCRIPT_DIR/init"
 
 main_window
 ls_window
+tty_invite
