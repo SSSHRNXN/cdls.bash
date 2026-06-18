@@ -1,3 +1,17 @@
 #!/bin/bash
 
-lines_top="$(printf -- "${HORIZONTAL_L}%.0s" $(seq 1 "$((TTY_COLUMNS - 2))"))"
+main_window(){
+	lines_top="${CORNER_TL}$(printf -- "${HORIZONTAL_L}%.0s" $(seq 1 "$((TTY_COLUMNS - 2))"))${CORNER_TR}"
+	lines_side="${VERTICAL_L}$(printf -- " %.0s" $(seq 1 "$((TTY_COLUMNS - 2))"))${VERTICAL_L}"
+	lines_bot="${CORNER_BL}$(printf -- "${HORIZONTAL_L}%.0s" $(seq 1 "$((TTY_COLUMNS - 2))"))${CORNER_BR}"
+
+	if [ "$CLEAR_TTY" == true ]; then
+		clear
+	fi
+
+	echo -e "$lines_top"
+	for line in $(seq 1 $((TTY_LINES - TTY_INVITE_GAP))); do
+		echo -e "$lines_side"
+	done
+	echo -e "$lines_bot"
+}

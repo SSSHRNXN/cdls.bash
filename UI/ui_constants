@@ -1,4 +1,6 @@
 #!/bin/bash
 
+CLEAR_TTY=true
 TTY_COLUMNS="$(tput cols)"
 TTY_LINES="$(tput lines)"
+TTY_INVITE_GAP=6
