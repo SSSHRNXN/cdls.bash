@@ -1,10 +1,18 @@
 #!/bin/bash
 
-main_window(){
-	lines_top="${CORNER_TL}$(printf -- "${HORIZONTAL_L}%.0s" $(seq 1 "$((TTY_COLUMNS - 2))"))${CORNER_TR}"
-	lines_side="${VERTICAL_L}$(printf -- " %.0s" $(seq 1 "$((TTY_COLUMNS - 2))"))${VERTICAL_L}"
-	lines_bot="${CORNER_BL}$(printf -- "${HORIZONTAL_L}%.0s" $(seq 1 "$((TTY_COLUMNS - 2))"))${CORNER_BR}"
+print_values="${VERTICAL_L} %-${LS_USEROWN_GAP}s ${VERTICAL_L} %-${LS_GROUP_GAP}s ${VERTICAL_L} %-${LS_DATE}s ${VERTICAL_L} %-${LS_FILE_GAP}s ${VERTICAL_L} %s \n"
 
+STATS_GAP_SUM=$(( ${LS_FILE_GAP:-0} + ${LS_USEROWN_GAP:-0} + ${LS_GROUP_GAP:-0} + ${LS_DATE_GAP:-0} + 11 ))
+
+lines_top="${CORNER_TL}$(printf -- "${HORIZONTAL_L}%.0s" $(seq 1 "$((TTY_COLUMNS - 2))"))${CORNER_TR}"
+lines_side="${VERTICAL_L}$(printf -- " %.0s" $(seq 1 "$((TTY_COLUMNS - 2))"))${VERTICAL_L}"
+lines_bot="${CORNER_BL}$(printf -- "${HORIZONTAL_L}%.0s" $(seq 1 "$((TTY_COLUMNS - 2))"))${CORNER_BR}"
+full_line=$(printf -- "${HORIZONTAL_L}%.0s" $(seq 1 "$((TTY_COLUMNS))"))
+
+ls_lines_top="${JOIN_RIGHT_L}$(printf -- "${HORIZONTAL_L}%.0s" $(seq 1 "${STATS_GAP_SUM}"))${CORNER_TR}"
+ls_lines_bot="${JOIN_RIGHT_L}$(printf -- "${HORIZONTAL_L}%.0s" $(seq 1 "${STATS_GAP_SUM}"))${CORNER_BR}"
+
+main_window(){
 	if [ "$CLEAR_TTY" == true ]; then
 		clear
 	fi
@@ -14,4 +22,24 @@ main_window(){
 		echo -e "$lines_side"
 	done
 	echo -e "$lines_bot"
+	echo -e "$full_line"
+
+}
+
+ls_window(){
+	printf "\033[${LS_WINDOW_STARTS_ROW}H"
+	echo -e "$ls_lines_top"
+
+	ls -la --group-directories-first --time-style=long-iso | awk \
+		-v values="$print_values" \
+		'NR > 3 {
+			date = $6 " " $7 
+			printf values, $3, $4, date, ($1 ~ /^d/ ? "DIR" : "FILE"), $8 "\033[0m"
+		}' 
+
+	echo -e "$ls_lines_bot"
+}
+
+tty_invite(){
+	printf '\033[1A\033[2K\r' 
 }
